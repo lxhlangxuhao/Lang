@@ -109,7 +109,7 @@
 	<!-- mysql sqlSessionFactory -->
 	<bean id="sqlSessionFactoryMysql" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="mysqlAtomikosDataSource"/>
-		<property name="mapperLocations" value="classpath*:com/xu/hao/mysql/mapper/*Mapper.xml"/>
+		<property name="mapperLocations" value="classpath*:com/xu/hao/**/*Mapper.xml"/>
 		<property name="configLocation" value="classpath:mybatis-config.xml"/>
 	</bean>
 
@@ -119,7 +119,7 @@
 <!--		<property name = "sqlSessionFactoryBeanName" value = "sqlSessionFactoryOracle" />-->
 <!--	</bean>-->
 	<bean class = "org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name = "basePackage" value="com.hao.xu.lang.mapper.mysql" />
+		<property name = "basePackage" value="com.hao.xu.lang.*.mapper" />
 		<property name = "sqlSessionFactoryBeanName" value = "sqlSessionFactoryMysql" />
 	</bean>
 

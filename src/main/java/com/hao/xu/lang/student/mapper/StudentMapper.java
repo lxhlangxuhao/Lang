@@ -1,7 +1,9 @@
 package com.hao.xu.lang.student.mapper;
 
 import com.hao.xu.lang.student.entity.Student;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface StudentMapper {
     int deleteByPrimaryKey(String sid);
 
