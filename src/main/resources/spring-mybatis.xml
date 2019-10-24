@@ -109,7 +109,7 @@
 	<!-- mysql sqlSessionFactory -->
 	<bean id="sqlSessionFactoryMysql" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="mysqlAtomikosDataSource"/>
-		<property name="mapperLocations" value="classpath*:com/xu/hao/**/*Mapper.xml"/>
+		<property name="mapperLocations" value="classpath*:com/hao/xu/lang/mapper/**/*Mapper.xml"/>
 		<property name="configLocation" value="classpath:mybatis-config.xml"/>
 	</bean>
 
