@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hao.xu.lang.student.mapper.StudentMapper" >
+  <resultMap id="BaseResultMap" type="com.hao.xu.lang.student.entity.Student" >
+    <id column="SID" property="sid" jdbcType="INTEGER" />
+    <result column="Sname" property="sname" jdbcType="VARCHAR" />
+    <result column="Sage" property="sage" jdbcType="TIMESTAMP" />
+    <result column="Ssex" property="ssex" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    SID, Sname, Sage, Ssex
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from Student
+    where SID = #{sid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from Student
+    where SID = #{sid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hao.xu.lang.student.entity.Student" >
+    insert into Student (SID, Sname, Sage, 
+      Ssex)
+    values (#{sid,jdbcType=INTEGER}, #{sname,jdbcType=VARCHAR}, #{sage,jdbcType=TIMESTAMP}, 
+      #{ssex,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hao.xu.lang.student.entity.Student" >
+    insert into Student
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        SID,
+      </if>
+      <if test="sname != null" >
+        Sname,
+      </if>
+      <if test="sage != null" >
+        Sage,
+      </if>
+      <if test="ssex != null" >
+        Ssex,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="sname != null" >
+        #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="sage != null" >
+        #{sage,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ssex != null" >
+        #{ssex,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hao.xu.lang.student.entity.Student" >
+    update Student
+    <set >
+      <if test="sname != null" >
+        Sname = #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="sage != null" >
+        Sage = #{sage,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ssex != null" >
+        Ssex = #{ssex,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SID = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hao.xu.lang.student.entity.Student" >
+    update Student
+    set Sname = #{sname,jdbcType=VARCHAR},
+      Sage = #{sage,jdbcType=TIMESTAMP},
+      Ssex = #{ssex,jdbcType=VARCHAR}
+    where SID = #{sid,jdbcType=INTEGER}
+  </update>
+</mapper>

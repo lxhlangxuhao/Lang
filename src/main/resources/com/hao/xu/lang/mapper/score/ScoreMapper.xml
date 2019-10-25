@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hao.xu.lang.score.mapper.ScoreMapper" >
+  <resultMap id="BaseResultMap" type="com.hao.xu.lang.score.entity.Score" >
+    <id column="SID" property="sid" jdbcType="INTEGER" />
+    <result column="CID" property="cid" jdbcType="VARCHAR" />
+    <result column="score" property="score" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    SID, CID, score
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from score
+    where SID = #{sid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from score
+    where SID = #{sid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hao.xu.lang.score.entity.Score" >
+    insert into score (SID, CID, score
+      )
+    values (#{sid,jdbcType=INTEGER}, #{cid,jdbcType=VARCHAR}, #{score,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hao.xu.lang.score.entity.Score" >
+    insert into score
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        SID,
+      </if>
+      <if test="cid != null" >
+        CID,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="cid != null" >
+        #{cid,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hao.xu.lang.score.entity.Score" >
+    update score
+    <set >
+      <if test="cid != null" >
+        CID = #{cid,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        score = #{score,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where SID = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hao.xu.lang.score.entity.Score" >
+    update score
+    set CID = #{cid,jdbcType=VARCHAR},
+      score = #{score,jdbcType=DECIMAL}
+    where SID = #{sid,jdbcType=INTEGER}
+  </update>
+</mapper>
