@@ -20,6 +20,6 @@ public class ScoreApiController {
 
 	@RequestMapping(value = "/insert")
 	public void insert(Score score) {
-		scoreService.insert1(score);
+		scoreService.insert(score);
 	}
 }

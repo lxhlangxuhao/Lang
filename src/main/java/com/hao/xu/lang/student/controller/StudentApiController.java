@@ -1,5 +1,6 @@
 package com.hao.xu.lang.student.controller;
 
+import com.hao.xu.lang.base.Response;
 import com.hao.xu.lang.student.entity.Student;
 import com.hao.xu.lang.student.mapper.StudentMapper;
 import com.hao.xu.lang.student.service.StudentServiceImpl;
@@ -28,8 +29,8 @@ public class StudentApiController {
 	}
 
 	@RequestMapping(value = "/insert")
-	public void insert(Student student) {
-		studentService.insert(student);
+	public Response insert(Student student) {
+		return studentService.insert(student);
 	}
 
 

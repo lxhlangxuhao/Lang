@@ -3,6 +3,15 @@ package com.hao.xu.lang.score.entity;
 import java.math.BigDecimal;
 
 public class Score {
+
+    public Score(String cid, BigDecimal score) {
+        this.cid = cid;
+        this.score = score;
+    }
+
+    public Score() {
+    }
+
     private Integer sid;
 
     private String cid;
@@ -32,4 +41,6 @@ public class Score {
     public void setScore(BigDecimal score) {
         this.score = score;
     }
+
+
 }

@@ -4,6 +4,7 @@ import com.hao.xu.lang.score.entity.Score;
 import com.hao.xu.lang.score.mapper.ScoreMapper;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -17,8 +18,8 @@ public class ScoreServiceImpl {
 	@Resource
 	private ScoreMapper sroceMapper;
 
-	@Transactional
-	public void insert1(Score score) {
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public void  insert(Score score) {
 		sroceMapper.insertSelective(score);
 		int i = 1 / 0;
 	}
