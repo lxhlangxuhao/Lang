@@ -17,9 +17,12 @@
         <alibaba-datasource.version>1.1.17</alibaba-datasource.version>
         <mybatis-spring.version>1.2.3</mybatis-spring.version>
         <atomikos.version>3.7.0</atomikos.version>
-        <log4j.version>1.2.17</log4j.version>
-        <slf4j.version>1.7.13</slf4j.version>
-        <log4j2-version>2.10.0</log4j2-version>
+<!--        <log4j.version>1.2.17</log4j.version>-->
+<!--        <slf4j.version>1.7.13</slf4j.version>-->
+<!--        <log4j2-version>2.10.0</log4j2-version>-->
+        <!-- log4j日志文件管理包版本 -->
+        <slf4j.version>1.7.7</slf4j.version>
+        <log4j.version>2.7</log4j.version>
     </properties>
 
     <dependencies>
@@ -42,21 +45,39 @@
           <version>4.12</version>
           <scope>test</scope>
         </dependency>
-        <!-- Log -->
+        <!-- 日志文件管理包 -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <!--用于slf4j与log4j2保持桥接 -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>${log4j2-version}</version>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <scope>runtime</scope>
+            <version>${log4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
-            <version>${log4j2-version}</version>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-web</artifactId>
-            <version>${log4j2-version}</version>
+            <version>${log4j.version}</version>
         </dependency>
         <!--J2EE-->
         <dependency>
@@ -114,7 +135,6 @@
           <version>${springframework.version}</version>
         </dependency>
         <!-- springframework end -->
-
         <!-- aop aspectj框架支持的包 -->
         <dependency>
           <groupId>org.aspectj</groupId>
@@ -163,20 +183,13 @@
             <artifactId>druid</artifactId>
             <version>${alibaba-datasource.version}</version>
         </dependency>
-        <!-- 日志 -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.10</version>
-        </dependency>
-
-        <!-- atomikos 多数据源事务管理 -->
+       <!-- jta管理spring事务 -->
         <dependency>
             <groupId>javax.transaction</groupId>
             <artifactId>jta</artifactId>
             <version>1.1</version>
         </dependency>
-
+        <!-- atomikos 多数据源事务管理 分布式事务 start -->
         <dependency>
             <groupId>com.atomikos</groupId>
             <artifactId>atomikos-util</artifactId>
@@ -212,6 +225,7 @@
             <artifactId>transactions-jdbc-deprecated</artifactId>
             <version>${atomikos.version}</version>
         </dependency>
+        <!-- atomikos 多数据源事务管理 分布式事务 end -->
 
     </dependencies>
     <build>
@@ -224,7 +238,6 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
-
             <plugin>
                 <!--Mybatis-generator插件,用于自动生成Mapper和POJO-->
                 <groupId>org.mybatis.generator</groupId>
