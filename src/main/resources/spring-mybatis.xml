@@ -2,7 +2,6 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	   xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
-	   xmlns:p="http://www.springframework.org/schema/p"
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans
 	       http://www.springframework.org/schema/beans/spring-beans.xsd
 	       http://www.springframework.org/schema/tx
@@ -15,35 +14,35 @@
 		<property name="url" value="${system.mysql.url}" />
 		<property name="username" value="${system.mysql.username}" />
 		<property name="password" value="${system.mysql.password}" />
+		<!-- 这一项可配可不配，如果不配置druid会根据url自动识别dbType，然后选择相应的driverClassName(建议配置下) -->
+<!--		<property name="driverClassName" value=""/>-->
 		<!-- 初始化连接大小 -->
 		<property name="initialSize" value="0" />
 		<!-- 连接池最大使用连接数量 -->
 		<property name="maxActive" value="20" />
-		<!-- 连接池最大空闲 -->
-		<property name="maxIdle" value="20" />
 		<!-- 连接池最小空闲 -->
 		<property name="minIdle" value="0" />
 		<!-- 获取连接最大等待时间 -->
 		<property name="maxWait" value="60000" />
 		<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
 <!--		<property name="poolPreparedStatements" value="true" />-->
-<!--		<property name="maxPoolPreparedStatementPerConnectionSize" value="33" />-->
-<!--		<property name="validationQuery" value="${validationQuery}" />-->
-<!--		<property name="testOnBorrow" value="false" />-->
-<!--		<property name="testOnReturn" value="false" />-->
-<!--		<property name="testWhileIdle" value="true" />-->
-<!--		&lt;!&ndash; 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 &ndash;&gt;-->
-<!--		<property name="timeBetweenEvictionRunsMillis" value="60000" />-->
-<!--		&lt;!&ndash; 配置一个连接在池中最小生存的时间，单位是毫秒 &ndash;&gt;-->
-<!--		<property name="minEvictableIdleTimeMillis" value="25200000" />-->
-<!--		&lt;!&ndash; 打开removeAbandoned功能 &ndash;&gt;-->
-<!--		<property name="removeAbandoned" value="true" />-->
-<!--		&lt;!&ndash; 1800秒，也就是30分钟 &ndash;&gt;-->
-<!--		<property name="removeAbandonedTimeout" value="1800" />-->
-<!--		&lt;!&ndash; 关闭abanded连接时输出错误日志 &ndash;&gt;-->
-<!--		<property name="logAbandoned" value="true" />-->
-<!--		&lt;!&ndash; 监控数据库 &ndash;&gt;-->
-<!--		&lt;!&ndash; <property name="filters" value="stat,log4j" /> &ndash;&gt;-->
+		<property name="maxPoolPreparedStatementPerConnectionSize" value="33" />
+		<property name="validationQuery" value="select 1 " />
+		<property name="testOnBorrow" value="false" />
+		<property name="testOnReturn" value="false" />
+		<property name="testWhileIdle" value="true" />
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="25200000" />
+		<!-- 打开removeAbandoned功能 -->
+		<property name="removeAbandoned" value="true" />
+		<!-- 1800秒，也就是30分钟 -->
+		<property name="removeAbandonedTimeout" value="1800" />
+		<!-- 关闭abanded连接时输出错误日志 -->
+		<property name="logAbandoned" value="true" />
+		<!-- 监控数据库 -->
+<!--		<property name="filters" value="log4j" />-->
 <!--		<property name="filters" value="mergeStat" />-->
 	</bean>
 
@@ -61,58 +60,29 @@
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 	</bean>
 
-
-	<!-- 数据源动态切换 start -->
-<!--	<bean id="dataSourceAspect" class="com.hao.xu.lang.AspectLang.DynamicSourceAspect"/>-->
-<!--	<aop:config>-->
-<!--		<aop:aspect ref="dataSourceAspect" order="1">-->
-<!--			<aop:pointcut id="dataSourcePointcut" expression="execution(* com.hao.xu.lang.mapper.*.*.*(..))"/>-->
-<!--			<aop:before  pointcut-ref="dataSourcePointcut" method="intercept" />-->
-<!--			<aop:after-returning pointcut-ref="dataSourcePointcut" method="returning"/>-->
-<!--		</aop:aspect>-->
-<!--	</aop:config>-->
-
-<!--	<bean name="dynamicDatasource" class="com.hao.xu.lang.AspectLang.DynamicDataSource">-->
-<!--		<property name="targetDataSources">-->
-<!--			<map>-->
-<!--				&lt;!&ndash; key和value-ref尽量保持一致,只是为了规范减少不必要的麻烦 &ndash;&gt;-->
-<!--				<entry key="oracleAtomikosDataSource" value-ref="oracleAtomikosDataSource"/>-->
-<!--				<entry key="mysqlAtomikosDataSource" value-ref="mysqlAtomikosDataSource"/>-->
-<!--			</map>-->
-<!--		</property>-->
-<!--		&lt;!&ndash; 指定一个默认的数据源，即在不需要切换数据源时，本地系统默认使用的数据源 &ndash;&gt;-->
-<!--		<property name="defaultTargetDataSource" ref="oracleAtomikosDataSource" />-->
-<!--	</bean>-->
-	<!-- 数据源动态切换 end -->
-
 	<!-- 配置事务 -->
 	<bean id="txManager"
 		  class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-<!--	<tx:advice id="txAdvice" transaction-manager="txManager">-->
-<!--		<tx:attributes>-->
-<!--			<tx:method name="*" propagation="REQUIRED"/>-->
-<!--			<tx:method name="update*" propagation="REQUIRED"/>-->
-<!--			<tx:method name="delete*" propagation="REQUIRED"/>-->
-<!--			<tx:method name="insert*" propagation="REQUIRED"/>-->
-<!--			<tx:method name="get*" read-only="true"/>-->
-<!--		</tx:attributes>-->
-<!--	</tx:advice>-->
+	<!-- spring aop 实现事务管理 -->
+	<aop:config proxy-target-class="true">
+		<!--(execution(* com.sgai..*.service.*.*(..)) or execution(* com.sgai..*.handler.*.*(..)))-->
+		<aop:pointcut expression="execution(* com.hao.xu.lang.*.service.*.*(..))"
+					  id="service" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="service" />
+	</aop:config>
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="update*"/>
+			<tx:method name="delete*"/>
+			<tx:method name="insert*"/>
+			<tx:method name="get*" read-only="true"/>
+		</tx:attributes>
+	</tx:advice>
 
 	<!-- 开启Spring注解式事务 -->
 	<tx:annotation-driven transaction-manager="txManager" proxy-target-class="true"/>
-
-	<!-- 配置自定义的SqlSessionTemplate模板，注入相关配置 -->
-	<!--	<bean id="sqlSessionTemplate" class="com.hao.xu.lang.mapper.CustomSqlSessionTemplate" scope="prototype">-->
-	<!--		<constructor-arg ref="sqlSessionFactoryOracle" />-->
-	<!--		<property name="targetSqlSessionFactorys">-->
-	<!--			<map>-->
-	<!--				<entry key="sqlSessionFactoryOracle" value-ref="sqlSessionFactoryOracle"/>-->
-	<!--				<entry key="sqlSessionFactoryMysql" value-ref="sqlSessionFactoryMysql"/>-->
-	<!--			</map>-->
-	<!--		</property>-->
-	<!--	</bean>-->
 
 </beans>
