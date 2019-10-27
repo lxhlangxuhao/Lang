@@ -24,17 +24,16 @@ public class StudentServiceImpl {
 	@Resource
 	private ScoreServiceImpl scoreService;
 
-	@Transactional//(rollbackFor = Exception.class)
+	@Transactional(rollbackFor = Exception.class)
 	public Response insert(Student student) {
-
 		studentMapper.insertSelective(student);
-		try {
+//		try {
 			scoreService.insert(new Score("2",  new BigDecimal(20)));
-		} catch (RuntimeException e) {
-			e.printStackTrace();
-		}
+//		} catch (RuntimeException e) {
+//			e.printStackTrace();
+//		}
+		int i = 1 / 0;
 		return new Response().success();
-//		int i = 1 / 0;
 	}
 
 

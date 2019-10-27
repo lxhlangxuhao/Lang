@@ -2,6 +2,7 @@ package com.hao.xu.lang.score.controller;
 
 import com.hao.xu.lang.score.entity.Score;
 import com.hao.xu.lang.score.service.ScoreServiceImpl;
+import java.math.BigDecimal;
 import javax.annotation.Resource;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,8 +19,14 @@ public class ScoreApiController {
 	@Resource
 	private ScoreServiceImpl scoreService;
 
-	@RequestMapping(value = "/insert")
+//	@RequestMapping(value = "/insert")
 	public void insert(Score score) {
 		scoreService.insert(score);
+	}
+
+	@RequestMapping(value = "/insertTest")
+	public void insertTest() {
+
+		scoreService.insertTest();
 	}
 }
