@@ -33,6 +33,12 @@ public class StudentServiceImpl {
 //			e.printStackTrace();
 //		}
 		int i = 1 / 0;
+		String str = "{\n" +
+				"  \"name\": \"aa\",\n" +
+				"  \"age\": 10\n" +
+				"}";
+
+
 		return new Response().success();
 	}
 

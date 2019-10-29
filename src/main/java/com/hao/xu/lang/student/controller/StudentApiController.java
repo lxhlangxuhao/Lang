@@ -4,7 +4,10 @@ import com.hao.xu.lang.base.Response;
 import com.hao.xu.lang.student.entity.Student;
 import com.hao.xu.lang.student.mapper.StudentMapper;
 import com.hao.xu.lang.student.service.StudentServiceImpl;
+import com.hao.xu.lang.utils.QRCodeUtil;
+import java.io.IOException;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,6 +34,12 @@ public class StudentApiController {
 	@RequestMapping(value = "/insert")
 	public Response insert(Student student) {
 		return studentService.insert(student);
+	}
+
+	@RequestMapping(value = "/createQRCode")
+	public void createQRCode(String content, HttpServletResponse response) throws IOException {
+
+		QRCodeUtil.createCodeToOutputStream(content, response.getOutputStream());
 	}
 
 
